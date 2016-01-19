@@ -15,13 +15,8 @@
 package com.cloudera.dataflow.spark.streaming;
 
 
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
-import java.util.concurrent.LinkedBlockingQueue;
-
+import com.cloudera.dataflow.spark.EvaluationContext;
+import com.cloudera.dataflow.spark.SparkRuntimeContext;
 import com.google.cloud.dataflow.sdk.Pipeline;
 import com.google.cloud.dataflow.sdk.coders.Coder;
 import com.google.cloud.dataflow.sdk.transforms.AppliedPTransform;
@@ -30,7 +25,6 @@ import com.google.cloud.dataflow.sdk.util.WindowedValue;
 import com.google.cloud.dataflow.sdk.values.PInput;
 import com.google.cloud.dataflow.sdk.values.POutput;
 import com.google.cloud.dataflow.sdk.values.PValue;
-
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaRDDLike;
 import org.apache.spark.api.java.JavaSparkContext;
@@ -39,9 +33,8 @@ import org.apache.spark.streaming.api.java.JavaDStream;
 import org.apache.spark.streaming.api.java.JavaDStreamLike;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 
-
-import com.cloudera.dataflow.spark.EvaluationContext;
-import com.cloudera.dataflow.spark.SparkRuntimeContext;
+import java.util.*;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Streaming evaluation context helps to handle streaming.
@@ -181,7 +174,7 @@ public class StreamingEvaluationContext extends EvaluationContext {
   }
 
   @Override
-  protected JavaSparkContext getSparkContext() {
+  public JavaSparkContext getSparkContext() {
     return super.getSparkContext();
   }
 
@@ -201,7 +194,7 @@ public class StreamingEvaluationContext extends EvaluationContext {
   }
 
   @Override
-  protected <T> void setOutputRDD(PTransform<?, ?> transform,
+  public <T> void setOutputRDD(PTransform<?, ?> transform,
       JavaRDDLike<WindowedValue<T>, ?> rdd) {
     super.setOutputRDD(transform, rdd);
   }
